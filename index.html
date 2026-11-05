@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I have something to ask you... 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:'Nunito',sans-serif;color:#f6e6ee;overflow:hidden;
+    background:radial-gradient(circle at 30% 20%,#5a1d44 0%,#2a0f24 45%,#140812 100%)}
+  .heart-bg{position:fixed;bottom:-30px;font-size:18px;color:#ff6b9a;opacity:.5;
+    animation:rise linear forwards;pointer-events:none}
+  @keyframes rise{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
+  .card{position:relative;width:min(380px,92vw);min-height:560px;padding:28px 22px;
+    border-radius:28px;background:rgba(40,14,34,.72);backdrop-filter:blur(14px);
+    border:1px solid rgba(255,150,190,.15);box-shadow:0 30px 80px rgba(0,0,0,.5);
+    display:flex;flex-direction:column;align-items:center;text-align:center}
+  .progress{display:flex;gap:6px;width:100%;margin-bottom:18px}
+  .progress i{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.12);transition:.4s}
+  .progress i.on{background:linear-gradient(90deg,#ff7aa2,#ffb36b)}
+  .back{position:absolute;top:34px;left:22px;font-size:13px;opacity:.6;cursor:pointer;display:none}
+  .step{display:none;flex-direction:column;align-items:center;width:100%;animation:fade .5s}
+  .step.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .big{font-size:84px;margin:18px 0 8px;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  h1{font-family:'Dancing Script',cursive;font-size:38px;line-height:1.15;margin:10px 0;color:#ffd9e6}
+  p.sub{font-size:14px;opacity:.7;margin-bottom:22px}
+  .btns{display:flex;gap:14px;justify-content:center;align-items:center;min-height:60px;position:relative}
+  .btn{border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:16px;
+    padding:13px 30px;border-radius:999px;transition:transform .2s,box-shadow .2s}
+  .yes{background:linear-gradient(135deg,#ff6b9a,#ff8f70);color:#fff;box-shadow:0 8px 24px rgba(255,107,154,.45)}
+  .yes:hover{transform:scale(1.06)}
+  .no{background:rgba(255,255,255,.1);color:#f6e6ee}
+  .no.flee{position:fixed;max-width:80vw;z-index:10;transition:left .25s,top .25s}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:8px}
+  .grid.two{grid-template-columns:repeat(2,1fr)}
+  .opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;
+    padding:12px 8px;cursor:pointer;transition:.2s;font-size:14px;font-weight:600}
+  .opt small{display:block;font-weight:400;font-size:11px;opacity:.6;margin-top:3px}
+  .opt .ico{font-size:22px;display:block;margin-bottom:4px}
+  .opt:hover{background:rgba(255,120,160,.12)}
+  .opt.sel{border-color:#ff7aa2;background:rgba(255,107,154,.2);box-shadow:0 0 0 2px rgba(255,122,162,.35)}
+  .label{font-size:12px;opacity:.6;margin:16px 0 4px;letter-spacing:.06em;text-transform:uppercase}
+  .next{margin-top:20px;opacity:.35;pointer-events:none}
+  .next.ready{opacity:1;pointer-events:auto}
+  .letter{background:rgba(255,255,255,.05);border-radius:18px;padding:18px;font-size:15px;line-height:1.6;text-align:left;margin:8px 0 16px}
+  .ticket{width:100%;background:linear-gradient(135deg,rgba(255,107,154,.22),rgba(255,179,107,.15));
+    border:1px dashed rgba(255,180,200,.5);border-radius:20px;padding:18px;text-align:left;margin:10px 0}
+  .ticket div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+  .ticket div:last-child{border:0}
+  .ticket b{color:#ffd0df}
+  .tiny{font-size:12px;opacity:.55;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="progress"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="back" id="back">← Back</div>
+
+  <!-- 0: forgive -->
+  <div class="step active" data-step="0">
+    <div class="big">🧸💐</div>
+    <h1>Will you forgive me?</h1>
+    <p class="sub">I know I messed up... and I'm really sorry 🤍</p>
+    <div class="btns">
+      <button class="btn yes" onclick="go(1)">Yes 💕</button>
+      <button class="btn no" id="no">No</button>
+    </div>
+  </div>
+
+  <!-- 1: happy -->
+  <div class="step" data-step="1">
+    <div class="big">🥰💖</div>
+    <h1>Yaaay! Really?!</h1>
+    <p class="sub">Thank you for being so kind to me</p>
+    <div class="letter" id="letter">
+      I'm truly sorry for upsetting you. I regret every word that hurt you.
+      Your smile is my favorite thing, and I never want to be the reason it disappears.
+      I'll be more careful from now on, I promise. 🤍
+    </div>
+    <button class="btn yes" onclick="go(2)">Let's continue →</button>
+  </div>
+
+  <!-- 2: when -->
+  <div class="step" data-step="2">
+    <div class="big" style="font-size:60px">📅</div>
+    <h1>When's our make-up date?</h1>
+    <div class="label">Day</div>
+    <div class="grid" data-key="kun">
+      <div class="opt">Today</div><div class="opt">Tomorrow</div><div class="opt">Saturday</div>
+      <div class="opt">Sunday</div><div class="opt">Next week</div><div class="opt">You pick 😌</div>
+    </div>
+    <div class="label">Time</div>
+    <div class="grid two" data-key="vaqt">
+      <div class="opt"><span class="ico">🌤</span>Daytime</div>
+      <div class="opt"><span class="ico">🌇</span>Evening</div>
+    </div>
+    <button class="btn yes next" onclick="go(3)">Next →</button>
+  </div>
+
+  <!-- 3: where -->
+  <div class="step" data-step="3">
+    <div class="big" style="font-size:60px">🗺️</div>
+    <h1>Where are we going?</h1>
+    <div class="grid two" data-key="joy">
+      <div class="opt"><span class="ico">☕</span>Café<small>cozy coffee &amp; talks</small></div>
+      <div class="opt"><span class="ico">🍝</span>Dinner<small>a nice restaurant</small></div>
+      <div class="opt"><span class="ico">🎬</span>Movie<small>popcorn's on me</small></div>
+      <div class="opt"><span class="ico">🌳</span>Walk<small>park, holding hands</small></div>
+      <div class="opt"><span class="ico">🍦</span>Ice cream<small>two scoops, of course</small></div>
+      <div class="opt"><span class="ico">✨</span>Mystery spot<small>I'll choose</small></div>
+    </div>
+    <button class="btn yes next" onclick="go(4)">Next →</button>
+  </div>
+
+  <!-- 4: gift -->
+  <div class="step" data-step="4">
+    <div class="big" style="font-size:60px">🎁</div>
+    <h1>What should I bring?</h1>
+    <p class="sub">Pick as many as you like 😉</p>
+    <div class="grid two" data-key="sovga" data-multi="1">
+      <div class="opt"><span class="ico">💐</span>Flowers</div>
+      <div class="opt"><span class="ico">🍫</span>Chocolate</div>
+      <div class="opt"><span class="ico">🧸</span>Teddy bear</div>
+      <div class="opt"><span class="ico">💌</span>A letter</div>
+      <div class="opt"><span class="ico">🤗</span>Just hugs</div>
+      <div class="opt"><span class="ico">🎀</span>A surprise</div>
+    </div>
+    <button class="btn yes next" onclick="finish()">Done 💕</button>
+  </div>
+
+  <!-- 5: ticket -->
+  <div class="step" data-step="5">
+    <div class="big" style="font-size:64px">🎟️💞</div>
+    <h1>Make-up Ticket</h1>
+    <div class="ticket" id="ticket"></div>
+    <p class="sub" style="margin:6px 0 0">Screenshot this and send it to me 📸</p>
+    <p class="tiny">Valid forever. No refunds 😄</p>
+  </div>
+</div>
+
+<script>
+  const state = {};
+  let current = 0;
+  const steps = [...document.querySelectorAll('.step')];
+  const bars = [...document.querySelectorAll('.progress i')];
+  const back = document.getElementById('back');
+
+  function go(n){
+    steps[current].classList.remove('active');
+    current = n;
+    steps[n].classList.add('active');
+    bars.forEach((b,i)=>b.classList.toggle('on', i<=n));
+    back.style.display = (n>=2 && n<=4) ? 'block' : 'none';
+    resetNo();
+    if(n===1) burst(40);
+  }
+  back.onclick = ()=>go(current-1);
+
+  // Tanlovlar
+  document.querySelectorAll('.grid').forEach(grid=>{
+    const key = grid.dataset.key, multi = grid.dataset.multi;
+    grid.querySelectorAll('.opt').forEach(opt=>{
+      opt.onclick = ()=>{
+        const text = opt.childNodes[opt.querySelector('.ico')?1:0].textContent.trim();
+        if(multi){
+          opt.classList.toggle('sel');
+          state[key] = [...grid.querySelectorAll('.sel')].map(o=>o.childNodes[1].textContent.trim());
+          if(!state[key].length) delete state[key];
+        } else {
+          grid.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+          opt.classList.add('sel');
+          state[key] = text;
+        }
+        checkReady();
+      };
+    });
+  });
+  function checkReady(){
+    const step = steps[current];
+    const keys = [...step.querySelectorAll('.grid')].map(g=>g.dataset.key);
+    const ok = keys.every(k=>state[k]);
+    step.querySelector('.next')?.classList.toggle('ready', ok);
+  }
+
+  function finish(){
+    document.getElementById('ticket').innerHTML = `
+      <div><span>Day</span><b>${state.kun}</b></div>
+      <div><span>Time</span><b>${state.vaqt}</b></div>
+      <div><span>Place</span><b>${state.joy}</b></div>
+      <div><span>I'll bring</span><b>${state.sovga.join(', ')}</b></div>
+      <div><span>Status</span><b>Forgiven 💖</b></div>`;
+    go(5);
+    burst(70);
+  }
+
+  // Qochadigan "Yo'q" tugmasi
+  const no = document.getElementById('no');
+  const noTexts = ["No","Are you sure? 😏","Think again 😄","Nice try! 😜","Your smile says yes 😊","Can't catch me 🏃","Just say yes 💕"];
+  let noCount = 0;
+  function flee(e){
+    e && e.preventDefault();
+    noCount++;
+    no.textContent = noTexts[Math.min(noCount, noTexts.length-1)];
+    no.classList.add('flee');
+    const pad = 20, w = no.offsetWidth, h = no.offsetHeight;
+    no.style.left = (pad + Math.random()*(innerWidth - w - pad*2)) + 'px';
+    no.style.top  = (pad + Math.random()*(innerHeight - h - pad*2)) + 'px';
+    const yes = document.querySelector('[data-step="0"] .yes');
+    yes.style.transform = `scale(${Math.min(1 + noCount*0.12, 1.8)})`;
+  }
+  no.addEventListener('mouseenter', flee);
+  no.addEventListener('touchstart', flee, {passive:false});
+  no.addEventListener('click', flee);
+  function resetNo(){ no.style.display = current===0 ? '' : 'none'; }
+
+  // Yuraklar
+  function heart(){
+    const h = document.createElement('div');
+    h.className = 'heart-bg';
+    h.textContent = ['♥','💕','💗','♡'][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.fontSize = (12 + Math.random()*20) + 'px';
+    h.style.animationDuration = (5 + Math.random()*6) + 's';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 11000);
+  }
+  function burst(n){ for(let i=0;i<n;i++) setTimeout(heart, i*40); }
+  setInterval(heart, 700);
+  bars[0].classList.add('on');
+</script>
+</body>
+</html>
