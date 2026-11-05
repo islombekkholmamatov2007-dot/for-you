@@ -137,7 +137,8 @@
     <div class="big" style="font-size:64px">🎟️💞</div>
     <h1>Make-up Ticket</h1>
     <div class="ticket" id="ticket"></div>
-    <p class="sub" style="margin:6px 0 0">Screenshot this and send it to me 📸</p>
+    <button class="btn yes" style="margin-top:8px" onclick="sendTg()">Send me your answers 💌</button>
+    <p class="sub" style="margin:10px 0 0">or just screenshot this and send it to me 📸</p>
     <p class="tiny">Valid forever. No refunds 😄</p>
   </div>
 </div>
@@ -195,6 +196,12 @@
       <div><span>Status</span><b>Forgiven 💖</b></div>`;
     go(5);
     burst(70);
+  }
+
+  // Javoblarni Telegram orqali yuborish (u chatni o'zi tanlaydi)
+  function sendTg(){
+    const text = `My answers 💌\nDay: ${state.kun}\nTime: ${state.vaqt}\nPlace: ${state.joy}\nYou bring: ${state.sovga.join(', ')}\nStatus: Forgiven 💖`;
+    location.href = 'https://t.me/share/url?url=' + encodeURIComponent(location.href) + '&text=' + encodeURIComponent(text);
   }
 
   // Qochadigan "Yo'q" tugmasi
